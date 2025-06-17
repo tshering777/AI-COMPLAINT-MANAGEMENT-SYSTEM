@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import './app.css';
 
 // Mock AI function to categorize complaints
 const categorizeComplaint = (complaint) => {
@@ -153,67 +154,51 @@ const ComplaintForm = ({ onSubmit }) => {
   };
 
   return (
-    <div style={{ maxWidth: '600px', margin: '0 auto', padding: '20px' }}>
-      <h2 style={{ textAlign: 'center', color: '#333', marginBottom: '30px' }}>Submit Your Complaint</h2>
-      <div style={{ backgroundColor: 'white', padding: '30px', borderRadius: '8px', boxShadow: '0 2px 10px rgba(0,0,0,0.1)' }}>
-        <div style={{ marginBottom: '20px' }}>
-          <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>Name *</label>
+    <div className="form-container">
+      <h2 className="section-title">Submit Your Complaint</h2>
+      <div className="form-card">
+        <div className="form-group">
+          <label>Name *</label>
           <input
             type="text"
             value={formData.name}
             onChange={(e) => setFormData({...formData, name: e.target.value})}
-            style={{ width: '100%', padding: '10px', border: '1px solid #ddd', borderRadius: '4px', fontSize: '16px' }}
             required
           />
         </div>
         
-        <div style={{ marginBottom: '20px' }}>
-          <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>Email</label>
+        <div className="form-group">
+          <label>Email</label>
           <input
             type="email"
             value={formData.email}
             onChange={(e) => setFormData({...formData, email: e.target.value})}
-            style={{ width: '100%', padding: '10px', border: '1px solid #ddd', borderRadius: '4px', fontSize: '16px' }}
           />
         </div>
         
-        <div style={{ marginBottom: '20px' }}>
-          <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>Phone</label>
+        <div className="form-group">
+          <label>Phone</label>
           <input
             type="tel"
             value={formData.phone}
             onChange={(e) => setFormData({...formData, phone: e.target.value})}
-            style={{ width: '100%', padding: '10px', border: '1px solid #ddd', borderRadius: '4px', fontSize: '16px' }}
           />
         </div>
         
-        <div style={{ marginBottom: '20px' }}>
-          <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>Complaint Description *</label>
+        <div className="form-group">
+          <label>Complaint Description *</label>
           <textarea
             value={formData.complaint}
             onChange={(e) => setFormData({...formData, complaint: e.target.value})}
             placeholder="Describe your complaint in detail..."
             rows="4"
-            style={{ width: '100%', padding: '10px', border: '1px solid #ddd', borderRadius: '4px', fontSize: '16px', resize: 'vertical' }}
             required
           />
         </div>
         
         <button 
           onClick={handleSubmit}
-          style={{ 
-            width: '100%', 
-            padding: '12px', 
-            backgroundColor: '#007bff', 
-            color: 'white', 
-            border: 'none', 
-            borderRadius: '4px', 
-            fontSize: '16px', 
-            cursor: 'pointer',
-            transition: 'background-color 0.3s'
-          }}
-          onMouseOver={(e) => e.target.style.backgroundColor = '#0056b3'}
-          onMouseOut={(e) => e.target.style.backgroundColor = '#007bff'}
+          className="submit-button"
         >
           Submit Complaint
         </button>
@@ -234,42 +219,23 @@ const ComplaintCard = ({ complaint }) => {
   };
 
   return (
-    <div style={{ 
-      backgroundColor: 'white', 
-      padding: '20px', 
-      borderRadius: '8px', 
-      boxShadow: '0 2px 8px rgba(0,0,0,0.1)', 
-      marginBottom: '15px',
-      border: `3px solid #007bff20`
-    }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
-        <span style={{ fontSize: '14px', color: '#666' }}>#{complaint.id}</span>
-        <span style={{ 
-          padding: '4px 8px', 
-          borderRadius: '12px', 
-          fontSize: '12px', 
-          backgroundColor: getStatusColor(complaint.status),
-          color: 'white'
-        }}>
+    <div className="complaint-card">
+      <div className="complaint-header">
+        <span className="complaint-id">#{complaint.id}</span>
+        <span className="complaint-status" style={{ backgroundColor: getStatusColor(complaint.status) }}>
           {complaint.status}
         </span>
       </div>
-      <h4 style={{ margin: '0 0 10px 0', color: '#333' }}>{complaint.name}</h4>
-      <p style={{ color: '#666', marginBottom: '15px', lineHeight: '1.5' }}>{complaint.complaint}</p>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
-        <span style={{ 
-          padding: '4px 8px', 
-          borderRadius: '12px', 
-          fontSize: '12px', 
-          backgroundColor: '#6c757d',
-          color: 'white'
-        }}>
+      <h4 className="complaint-name">{complaint.name}</h4>
+      <p className="complaint-description">{complaint.complaint}</p>
+      <div className="complaint-footer">
+        <span className="complaint-department">
           {complaint.department}
         </span>
-        <span style={{ fontSize: '14px', color: '#666' }}>{complaint.submittedAt}</span>
+        <span className="complaint-date">{complaint.submittedAt}</span>
       </div>
-      {complaint.email && <p style={{ fontSize: '14px', color: '#666', margin: '5px 0' }}>📧 {complaint.email}</p>}
-      {complaint.phone && <p style={{ fontSize: '14px', color: '#666', margin: '5px 0' }}>📞 {complaint.phone}</p>}
+      {complaint.email && <p className="complaint-contact">📧 {complaint.email}</p>}
+      {complaint.phone && <p className="complaint-contact">📞 {complaint.phone}</p>}
     </div>
   );
 };
@@ -289,36 +255,35 @@ const Dashboard = ({ complaints }) => {
   };
 
   return (
-    <div style={{ padding: '20px' }}>
-      <h2 style={{ textAlign: 'center', color: '#333', marginBottom: '30px' }}>Complaint Dashboard</h2>
+    <div className="dashboard-container">
+      <h2 className="section-title">Complaint Dashboard</h2>
       
       {/* Stats Cards */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '20px', marginBottom: '30px' }}>
-        <div style={{ backgroundColor: '#007bff', color: 'white', padding: '20px', borderRadius: '8px', textAlign: 'center' }}>
-          <h3 style={{ margin: '0 0 10px 0', fontSize: '32px' }}>{filteredComplaints.length}</h3>
-          <p style={{ margin: 0 }}>Total Complaints</p>
+      <div className="stats-grid">
+        <div className="stat-card total">
+          <h3>{filteredComplaints.length}</h3>
+          <p>Total Complaints</p>
         </div>
-        <div style={{ backgroundColor: '#ffc107', color: 'white', padding: '20px', borderRadius: '8px', textAlign: 'center' }}>
-          <h3 style={{ margin: '0 0 10px 0', fontSize: '32px' }}>{getStatusCount('Pending')}</h3>
-          <p style={{ margin: 0 }}>Pending</p>
+        <div className="stat-card pending">
+          <h3>{getStatusCount('Pending')}</h3>
+          <p>Pending</p>
         </div>
-        <div style={{ backgroundColor: '#28a745', color: 'white', padding: '20px', borderRadius: '8px', textAlign: 'center' }}>
-          <h3 style={{ margin: '0 0 10px 0', fontSize: '32px' }}>{getStatusCount('Resolved')}</h3>
-          <p style={{ margin: 0 }}>Resolved</p>
+        <div className="stat-card resolved">
+          <h3>{getStatusCount('Resolved')}</h3>
+          <p>Resolved</p>
         </div>
-        <div style={{ backgroundColor: '#17a2b8', color: 'white', padding: '20px', borderRadius: '8px', textAlign: 'center' }}>
-          <h3 style={{ margin: '0 0 10px 0', fontSize: '32px' }}>{getStatusCount('In Progress')}</h3>
-          <p style={{ margin: 0 }}>In Progress</p>
+        <div className="stat-card in-progress">
+          <h3>{getStatusCount('In Progress')}</h3>
+          <p>In Progress</p>
         </div>
       </div>
 
       {/* Department Filter */}
-      <div style={{ marginBottom: '30px', textAlign: 'center' }}>
-        <label style={{ marginRight: '10px', fontWeight: 'bold' }}>Filter by Department:</label>
+      <div className="department-filter">
+        <label>Filter by Department:</label>
         <select 
           value={selectedDepartment} 
           onChange={(e) => setSelectedDepartment(e.target.value)}
-          style={{ padding: '8px 12px', borderRadius: '4px', border: '1px solid #ddd' }}
         >
           {departments.map(dept => (
             <option key={dept} value={dept}>{dept}</option>
@@ -328,22 +293,136 @@ const Dashboard = ({ complaints }) => {
 
       {/* Department Header */}
       {selectedDepartment !== 'All' && (
-        <h3 style={{ color: '#333', marginBottom: '20px' }}>
+        <h3 className="department-header">
           {selectedDepartment} Department ({filteredComplaints.length} complaints)
         </h3>
       )}
 
       {/* Complaints List */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))', gap: '20px' }}>
+      <div className="complaints-grid">
         {filteredComplaints.length > 0 ? (
           filteredComplaints.map(complaint => (
             <ComplaintCard key={complaint.id} complaint={complaint} />
           ))
         ) : (
-          <p style={{ textAlign: 'center', color: '#666', gridColumn: '1 / -1' }}>
+          <p className="no-complaints">
             No complaints found for the selected department.
           </p>
         )}
+      </div>
+    </div>
+  );
+};
+
+// Department Overview Component
+const DepartmentOverview = ({ complaints }) => {
+  const [selectedDepartment, setSelectedDepartment] = useState(null);
+  
+  // Get all unique departments from complaints and their case counts
+  const allDepartments = [
+    'Agriculture Department',
+    'Animal Husbandry & Veterinary Services Department',
+    'Buildings & Housing Department',
+    'Commerce & Industries Department',
+    'Culture Department',
+    'Education Department',
+    'Power Department',
+    'Finance Department',
+    'Forest & Environment Department',
+    'Health & Family Welfare Department',
+    'Horticulture Department',
+    'Information Technology Department',
+    'Labour Department',
+    'Land Revenue & Disaster Management Department',
+    'Law Department',
+    'Planning & Development Department',
+    'Public Health Engineering Department',
+    'Roads & Bridges Department',
+    'Transport Department',
+    'Tourism & Civil Aviation Department',
+    'Women, Child, Senior Citizen and Divyangjan Welfare Department',
+    'Sports & Youth Affairs Department',
+    'Skill Development Department',
+    'Social Welfare Department',
+    'Water Resources Department',
+    'Mines & Geology Department',
+    'Food & Civil Supplies Department',
+    'Fisheries Department',
+    'Election Department (Office of Chief Electoral Officer)',
+    'Home Department'
+  ];
+
+  const getDepartmentComplaints = (deptName) => {
+    return complaints.filter(complaint => complaint.department === deptName);
+  };
+
+  const getDepartmentCaseCount = (deptName) => {
+    return getDepartmentComplaints(deptName).length;
+  };
+
+  if (selectedDepartment) {
+    const departmentComplaints = getDepartmentComplaints(selectedDepartment);
+    
+    return (
+      <div className="department-details">
+        <div className="back-button-container">
+          <button 
+            onClick={() => setSelectedDepartment(null)}
+            className="back-button"
+          >
+            ← Back to Overview
+          </button>
+        </div>
+        
+        <h2 className="department-title">
+          {selectedDepartment}
+        </h2>
+        <p className="department-subtitle">
+          {departmentComplaints.length} complaint{departmentComplaints.length !== 1 ? 's' : ''}
+        </p>
+        
+        {/* Complaints List */}
+        <div className="department-complaints-grid">
+          {departmentComplaints.length > 0 ? (
+            departmentComplaints.map(complaint => (
+              <ComplaintCard key={complaint.id} complaint={complaint} />
+            ))
+          ) : (
+            <p className="no-complaints">
+              No complaints found for this department.
+            </p>
+          )}
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="overview-container">
+      <h2 className="section-title">Department Overview</h2>
+      
+      {/* Department Cards Grid */}
+      <div className="departments-grid">
+        {allDepartments.map((deptName, index) => {
+          const caseCount = getDepartmentCaseCount(deptName);
+          return (
+            <div 
+              key={index}
+              onClick={() => setSelectedDepartment(deptName)}
+              className="department-card"
+            >
+              <h3>
+                {deptName}
+              </h3>
+              <div className="case-count">
+                {caseCount}
+              </div>
+              <p>
+                No of cases : {caseCount}
+              </p>
+            </div>
+          );
+        })}
       </div>
     </div>
   );
@@ -411,53 +490,35 @@ const App = () => {
   };
 
   return (
-    <div style={{ minHeight: '100vh', backgroundColor: '#f8f9fa' }}>
-      <header style={{ 
-        backgroundColor: '#343a40', 
-        color: 'white', 
-        padding: '20px', 
-        textAlign: 'center',
-        boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
-      }}>
-        <h1 style={{ margin: '0 0 20px 0' }}>🏛️ AI Complaint Management System</h1>
+    <div className="app-container">
+      <header className="app-header">
+        <h1>🏛️ AI Complaint Management System</h1>
         <nav>
           <button 
             onClick={() => setCurrentView('dashboard')}
-            style={{
-              padding: '10px 20px',
-              margin: '0 10px',
-              backgroundColor: currentView === 'dashboard' ? '#007bff' : 'transparent',
-              color: 'white',
-              border: '1px solid #007bff',
-              borderRadius: '4px',
-              cursor: 'pointer'
-            }}
+            className={`nav-button ${currentView === 'dashboard' ? 'active' : ''}`}
           >
             Dashboard
           </button>
           <button 
+            onClick={() => setCurrentView('overview')}
+            className={`nav-button ${currentView === 'overview' ? 'active' : ''}`}
+          >
+            Department Overview
+          </button>
+          <button 
             onClick={() => setCurrentView('submit')}
-            style={{
-              padding: '10px 20px',
-              margin: '0 10px',
-              backgroundColor: currentView === 'submit' ? '#007bff' : 'transparent',
-              color: 'white',
-              border: '1px solid #007bff',
-              borderRadius: '4px',
-              cursor: 'pointer'
-            }}
+            className={`nav-button ${currentView === 'submit' ? 'active' : ''}`}
           >
             Submit Complaint
           </button>
         </nav>
       </header>
 
-      <main style={{ padding: '20px' }}>
-        {currentView === 'dashboard' ? (
-          <Dashboard complaints={complaints} />
-        ) : (
-          <ComplaintForm onSubmit={handleComplaintSubmit} />
-        )}
+      <main className="app-main">
+        {currentView === 'dashboard' && <Dashboard complaints={complaints} />}
+        {currentView === 'overview' && <DepartmentOverview complaints={complaints} />}
+        {currentView === 'submit' && <ComplaintForm onSubmit={handleComplaintSubmit} />}
       </main>
     </div>
   );
